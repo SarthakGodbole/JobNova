@@ -4,6 +4,7 @@ import ApplicationCard from '../../components/ApplicationCard';
 import StatusBadge from '../../components/StatusBadge';
 import { getApplications, deleteApplication } from '../../services/application.service';
 import { motion } from 'framer-motion';
+import { EyeIcon, EditIcon, TrashIcon } from '../../components/ui/Icons';
 
 const Applications = () => {
   const [applications, setApplications] = useState([]);
@@ -167,9 +168,11 @@ const Applications = () => {
                     <td><StatusBadge status={app.status} /></td>
                     <td className="text-muted">{app.appliedDate ? new Date(app.appliedDate).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : '—'}</td>
                     <td className="actions-cell">
-                      <Link to={`/student/applications/${app._id}`} className="btn-secondary small" title="View Details">👁️</Link>
-                      <Link to={`/student/applications/${app._id}/edit`} className="btn-secondary small" title="Edit">✏️</Link>
-                      <button onClick={() => confirmDelete(app._id)} className="btn-danger small" title="Delete">🗑️</button>
+                      <div style={{ display: 'flex', gap: '0.4rem', justifyContent: 'flex-end' }}>
+                        <Link to={`/student/applications/${app._id}`} className="btn-icon-action btn-icon-view" title="View Details"><EyeIcon /></Link>
+                        <Link to={`/student/applications/${app._id}/edit`} className="btn-icon-action btn-icon-edit" title="Edit"><EditIcon /></Link>
+                        <button onClick={() => confirmDelete(app._id)} className="btn-icon-action btn-icon-delete" title="Delete"><TrashIcon /></button>
+                      </div>
                     </td>
                   </tr>
                 );

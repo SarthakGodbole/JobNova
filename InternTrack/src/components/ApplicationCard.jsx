@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import StatusBadge from './StatusBadge';
+import { EyeIcon, EditIcon, TrashIcon } from './ui/Icons';
 
 const ApplicationCard = ({ application, onDelete }) => {
   const { _id, company, role, status, appliedDate } = application;
@@ -21,10 +22,10 @@ const ApplicationCard = ({ application, onDelete }) => {
           <span className="icon">📅</span> {appliedDate ? new Date(appliedDate).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : '—'}
         </p>
       </div>
-      <div className="card-actions">
-        <Link to={`/student/applications/${_id}`} className="btn-secondary small" title="View Details">👁️</Link>
-        <Link to={`/student/applications/${_id}/edit`} className="btn-secondary small" title="Edit">✏️</Link>
-        <button onClick={() => onDelete(_id)} className="btn-danger small" title="Delete">🗑️</button>
+      <div className="card-actions" style={{ display: 'flex', gap: '0.4rem', justifyContent: 'flex-end', marginTop: '1rem', borderTop: '1px solid var(--border-color)', paddingTop: '1rem' }}>
+        <Link to={`/student/applications/${_id}`} className="btn-icon-action btn-icon-view" title="View Details"><EyeIcon /></Link>
+        <Link to={`/student/applications/${_id}/edit`} className="btn-icon-action btn-icon-edit" title="Edit"><EditIcon /></Link>
+        <button onClick={() => onDelete(_id)} className="btn-icon-action btn-icon-delete" title="Delete"><TrashIcon /></button>
       </div>
     </div>
   );

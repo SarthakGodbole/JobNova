@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getApplicationById, createApplication, updateApplication } from '../../services/application.service';
-
+import { addNotification } from '../../utils/notificationUtils';
 const ApplicationForm = () => {
   const { id } = useParams();
   const isEdit = Boolean(id);
@@ -70,8 +70,10 @@ const ApplicationForm = () => {
       setLoading(true);
       if (isEdit) {
         await updateApplication(id, formData);
+        addNotification('Application Updated', `Your application for ${formData.role} at ${formData.company} was updated.`, 'info');
       } else {
         await createApplication(formData);
+        addNotification('Application Added', `You successfully added an application for ${formData.role} at ${formData.company}.`, 'info');
       }
       navigate('/student/applications');
     } catch (err) {
