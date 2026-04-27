@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer,
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer,
   PieChart, Pie, Cell
 } from 'recharts';
 import { motion } from 'framer-motion';
@@ -87,6 +87,9 @@ const Analytics = () => {
 
   const pendingCount = data?.statusBreakdown?.find(s => ['applied', 'pending'].includes(s.name?.toLowerCase()))?.value || 0;
 
+  // Filter out zero-value statuses for the pie chart
+  const validStatusData = data?.statusBreakdown?.filter(item => item.value > 0) || [];
+
   return (
     <motion.div className="page-container" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }}>
       <div className="page-header mb-4" style={{ marginBottom: '2.5rem' }}>
@@ -136,19 +139,21 @@ const Analytics = () => {
                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)' }}>No trend data available.</div>
             ) : (
               <ResponsiveContainer>
-                <BarChart data={data.monthlyTrend} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                  <defs>
-                    <linearGradient id="colorPrimary" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="var(--primary)" stopOpacity={0.9}/>
-                      <stop offset="95%" stopColor="var(--secondary)" stopOpacity={0.2}/>
-                    </linearGradient>
-                  </defs>
+                <LineChart data={data.monthlyTrend} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
                   <XAxis dataKey="month" stroke="var(--text-muted)" tick={{ fill: 'var(--text-muted)', fontSize: 12 }} axisLine={false} tickLine={false} />
                   <YAxis stroke="var(--text-muted)" tick={{ fill: 'var(--text-muted)', fontSize: 12 }} axisLine={false} tickLine={false} />
-                  <RechartsTooltip cursor={{ fill: 'rgba(255, 255, 255, 0.03)' }} content={<CustomTooltip />} />
-                  <Bar dataKey="applications" fill="url(#colorPrimary)" radius={[6, 6, 0, 0]} maxBarSize={50} />
-                </BarChart>
+                  <RechartsTooltip cursor={{ stroke: 'rgba(255, 255, 255, 0.1)', strokeWidth: 1, strokeDasharray: '3 3' }} content={<CustomTooltip />} />
+                  <Line 
+                    type="monotone" 
+                    dataKey="applications" 
+                    stroke="#00d2ff" 
+                    strokeWidth={3} 
+                    dot={{ fill: '#00d2ff', stroke: 'var(--panel-bg)', strokeWidth: 2, r: 5 }}
+                    activeDot={{ r: 7, stroke: '#fff', strokeWidth: 2 }}
+                    style={{ filter: 'drop-shadow(0px 4px 8px rgba(0, 210, 255, 0.4))' }} 
+                  />
+                </LineChart>
               </ResponsiveContainer>
             )}
           </div>
@@ -161,13 +166,13 @@ const Analytics = () => {
              <p className="text-muted" style={{ fontSize: '0.9rem', marginTop: '0.3rem' }}>Applications grouped by current status</p>
           </div>
           <div style={{ width: '100%', height: 320, flex: 1, position: 'relative' }}>
-            {(!data.statusBreakdown || data.statusBreakdown.length === 0) ? (
+            {validStatusData.length === 0 ? (
               <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)' }}>No status data available.</div>
             ) : (
               <ResponsiveContainer>
                 <PieChart>
                   <Pie
-                    data={data.statusBreakdown}
+                    data={validStatusData}
                     dataKey="value"
                     nameKey="name"
                     cx="50%"
@@ -177,7 +182,7 @@ const Analytics = () => {
                     paddingAngle={5}
                     stroke="none"
                   >
-                    {data.statusBreakdown.map((entry, index) => (
+                    {validStatusData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} style={{ filter: `drop-shadow(0px 0px 6px ${entry.color}80)` }} />
                     ))}
                   </Pie>
@@ -187,14 +192,16 @@ const Analytics = () => {
             )}
           </div>
           
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '1.2rem', flexWrap: 'wrap', marginTop: '1.5rem', backgroundColor: 'var(--input-bg)', padding: '1rem', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
-            {data.statusBreakdown && data.statusBreakdown.map((status, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', fontWeight: 500 }}>
-                <span style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: status.color, boxShadow: `0 0 8px ${status.color}` }}></span>
-                {status.name} <span style={{ color: 'var(--text-muted)' }}>({status.value})</span>
-              </div>
-            ))}
-          </div>
+          {validStatusData.length > 0 && (
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '1.2rem', flexWrap: 'wrap', marginTop: '1.5rem', backgroundColor: 'var(--input-bg)', padding: '1rem', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
+              {validStatusData.map((status, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', fontWeight: 500 }}>
+                  <span style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: status.color || '#00d2ff', boxShadow: `0 0 8px ${status.color || '#00d2ff'}` }}></span>
+                  {status.name} <span style={{ color: 'var(--text-muted)' }}>({status.value})</span>
+                </div>
+              ))}
+            </div>
+          )}
         </motion.div>
       </div>
     </motion.div>

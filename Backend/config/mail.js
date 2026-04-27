@@ -89,7 +89,7 @@ const transporter = nodemailer.createTransport({
 export const sendMail = async ({ to, subject, html }) => {
   try {
     const info = await transporter.sendMail({
-      from: `"InternTrack" <${process.env.MAIL_USER}>`,
+      from: `"JobNova" <${process.env.MAIL_USER}>`,
       to,
       subject,
       html,

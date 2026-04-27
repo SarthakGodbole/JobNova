@@ -6,11 +6,7 @@ import { AdminRoute, StudentRoute } from '../components/RoleRoute';
 import Landing from '../pages/Landing';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
-
-// Import Layouts
 import StudentLayout from '../layouts/StudentLayout';
-
-// Import Pages
 import Dashboard from '../pages/student/Dashboard';
 import Applications from '../pages/student/Applications';
 import ApplicationForm from '../pages/student/ApplicationForm';
@@ -18,17 +14,16 @@ import ApplicationDetails from '../pages/student/ApplicationDetails';
 import Analytics from '../pages/student/Analytics';
 import KanbanBoard from '../pages/student/KanbanBoard';
 
-// Import Admin Pages
+// Admin Pages
 import AdminLayout from '../layouts/AdminLayout';
 import AdminDashboard from '../pages/admin/Dashboard';
 import AdminUsers from '../pages/admin/Users';
 import AdminApplications from '../pages/admin/Applications';
 
-// Remaining mocks
 const Unauthorized = () => <h1>Unauthorized</h1>;
 const NotFound = () => <h1>404 Not Found</h1>;
 
-// Import Reusable Common Views
+
 import Profile from '../pages/Profile';
 
 const AppRoutes = () => {
@@ -40,9 +35,7 @@ const AppRoutes = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
 
-      {/* Protected Routes (Authenticated users only) */}
       <Route element={<ProtectedRoute />}>
-        {/* Student Only Routes */}
         <Route element={<StudentRoute />}>
           <Route element={<StudentLayout />}>
             <Route path="/student/dashboard" element={<Dashboard />} />
@@ -66,8 +59,6 @@ const AppRoutes = () => {
           </Route>
         </Route>
       </Route>
-
-      {/* Fallback */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
 
 const PublicNavbar = () => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <header className="public-navbar">
+    <header 
+      className={`public-navbar !fixed top-0 w-full z-[1000] transition-all duration-300 ease-in-out px-[5%] flex items-center justify-between ${
+        scrolled 
+          ? 'py-3 bg-[var(--panel-bg)] backdrop-blur-md shadow-lg border-b border-[var(--border-color)] opacity-100' 
+          : 'py-6 bg-transparent opacity-75'
+      }`}
+    >
       <div className="logo">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginRight: '0.4rem' }}>
           <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="url(#paint0_linear)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>

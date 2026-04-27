@@ -12,31 +12,13 @@ const Landing = () => {
 
       <main className="hero-section" style={{ minHeight: '90vh', paddingTop: '10rem' }}>
         <div className="hero-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            style={{ 
-              background: 'rgba(139, 92, 246, 0.1)', border: '1px solid rgba(139, 92, 246, 0.3)', 
-              padding: '0.4rem 1rem', borderRadius: '20px', color: '#c4b5fd', marginBottom: '1.5rem',
-              fontSize: '0.9rem', fontWeight: 600, display: 'inline-block'
-            }}
-          >
-            ✨ Free Forever
-          </motion.div>
-          
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
             className="glitch" style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', lineHeight: '1.2', marginBottom: '1.2rem' }}
           >
-            Track Your Job Applications<br/>
-            <span style={{ 
-              background: 'linear-gradient(to right, #8b5cf6, #3b82f6)', 
-              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-              display: 'inline-block'
-            }}>Never Miss a Follow-up</span>
+            Track Your Job Applications with JobNova
           </motion.h1>
 
           <motion.p 
@@ -45,7 +27,7 @@ const Landing = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="hero-subtitle" style={{ maxWidth: '650px', fontSize: '1.15rem', marginBottom: '2.5rem' }}
           >
-            Organize your internships and job applications in one place. Track progress, manage deadlines, and land your next role faster.
+            Organize applications, manage deadlines, and track every opportunity in one place.
           </motion.p>
 
           <motion.div 
@@ -55,7 +37,7 @@ const Landing = () => {
             className="hero-actions"
           >
             <Link to="/register" className="btn-primary large" style={{ background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)', border: 'none' }}>
-              Start Tracking Free
+              Get Started
             </Link>
             <a href="#how" className="btn-secondary large">
               Explore Features
@@ -63,36 +45,7 @@ const Landing = () => {
           </motion.div>
         </div>
         
-        {/* Mock Dashboard Visual */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95, rotateX: 10, y: 40 }}
-          animate={{ opacity: 1, scale: 1, rotateX: 0, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4, type: 'spring' }}
-          style={{
-            marginTop: '5rem',
-            width: '100%',
-            maxWidth: '1000px',
-            height: '380px',
-            background: 'rgba(15, 23, 42, 0.6)',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
-            borderRadius: '16px',
-            backdropFilter: 'blur(20px)',
-            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(139, 92, 246, 0.1)',
-            display: 'flex',
-            padding: '1.5rem',
-            gap: '1rem',
-            overflow: 'hidden',
-            perspective: '1000px'
-          }}
-        >
-          {['Applied', 'Interview', 'Offer', 'Rejected'].map((col, idx) => (
-            <div key={idx} style={{ flex: 1, background: 'rgba(0,0,0,0.2)', borderRadius: '12px', padding: '1rem' }}>
-              <div style={{ fontSize: '0.85rem', color: '#94a3b8', textTransform: 'uppercase', marginBottom: '1rem', fontWeight: 600 }}>{col}</div>
-              <div style={{ height: '70px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '8px', marginBottom: '0.8rem' }}></div>
-              {idx % 2 === 0 && <div style={{ height: '70px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '8px' }}></div>}
-            </div>
-          ))}
-        </motion.div>
+
       </main>
 
       <section id="how" className="features-section" style={{ padding: '5rem 5%' }}>
