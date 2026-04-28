@@ -103,16 +103,21 @@ Instead of relying on Excel sheets or scattered notes, JobNova provides a centra
                           +----------------------+
 
 ---
+```
 
 ## 📁 Folder Structure
 
-```
+```bash
 JobNova/
 ├── frontend/
 │   ├── src/
-│   ├── components/
-│   ├── pages/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── context/
+│   │   ├── layouts/
+│   │   └── lib/
 │   └── package.json
+│
 ├── backend/
 │   ├── controllers/
 │   ├── models/
@@ -120,10 +125,14 @@ JobNova/
 │   ├── middleware/
 │   ├── utils/
 │   └── server.js
+│
+├── assets/
+│   ├── Landingpage.png
+│   ├── dashboard.png
+│   └── analytics.png
+│
 └── README.md
 ```
-
----
 
 ## 📦 Installation & Setup
 
