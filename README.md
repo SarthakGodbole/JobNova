@@ -1,7 +1,7 @@
 
 # JobNova - Your Smart Job Tracking Platform 
 <p align="center">
-  <img src="./assets/dashboard.png" width="100%" />
+  <img src="./assets/Landingpage.png" width="100%" />
 </p>
 
 ---
