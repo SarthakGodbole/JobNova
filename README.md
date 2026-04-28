@@ -74,19 +74,33 @@ Instead of relying on Excel sheets or scattered notes, JobNova provides a centra
 
 ## 🏗️ System Architecture
 
-```
-User (Browser)
-      ↓
-React Frontend (UI)
-      ↓ API Calls
-Node.js / Express Backend
-      ↓
-MongoDB (Database)
-
-Extra Services:
-- Nodemailer → Email Notifications
-- Node-cron → Scheduled Jobs
-```
+```text
+           +----------------------+
+           |        User          |
+           |      (Browser)       |
+           +----------+-----------+
+                      |
+                      v
+           +----------------------+
+           |   React Frontend     |
+           |     (UI - Vite)      |
+           +----------+-----------+
+                      |
+                   API Calls
+                      |
+                      v
+           +----------------------+
+           |  Node.js / Express   |
+           |       Backend        |
+           +----+-----------+-----+
+                |           |
+                v           v
+     +----------------+   +----------------------+
+     |    MongoDB     |   |  External Services   |
+     |   Database     |   |----------------------|
+     +----------------+   | Nodemailer (Emails) |
+                          | Node-cron (Jobs)    |
+                          +----------------------+
 
 ---
 
@@ -116,7 +130,7 @@ JobNova/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/jobnova.git
+git clone https://github.com/SarthakGodbole/JobNova
 cd JobNova
 ```
 
