@@ -197,7 +197,7 @@ VITE_API_BASE_URL=http://localhost:5000/api
 
 ## 🌐 Live Demo
 
-🚀 https://your-jobnova-link.com
+🚀 https://job-nova-cyan.vercel.app
 
 ---
 
